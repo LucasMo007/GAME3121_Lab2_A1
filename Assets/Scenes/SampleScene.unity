@@ -3117,9 +3117,9 @@ MonoBehaviour:
   countText: {fileID: 802505414}
   winLoseText: {fileID: 1818398969}
   totalPickups: 12
-  hitWallClip: {fileID: 0}
-  winClip: {fileID: 0}
-  enemyHitClip: {fileID: 0}
+  hitWallClip: {fileID: 8300000, guid: 96494cd436208a141865ad8cec49116c, type: 3}
+  winClip: {fileID: 8300000, guid: b7ebbc8aca0e7a54ba575d7926c25ea4, type: 3}
+  enemyHitClip: {fileID: 8300000, guid: aaf41507773eafe4582d5e1e0e66de8f, type: 3}
 --- !u!54 &1870696880
 Rigidbody:
   m_ObjectHideFlags: 0
