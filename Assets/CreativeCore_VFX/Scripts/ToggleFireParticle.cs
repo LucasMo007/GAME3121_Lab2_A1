@@ -13,8 +13,6 @@ public class ToggleFireParticle : MonoBehaviour
     public ParticleSystem extinguishParticle;
     public GameObject pointLight;
 
-    bool isPlaying = true;
-
     private void Start()
     {
         fireParticle = GetComponent<ParticleSystem>();
@@ -24,21 +22,18 @@ public class ToggleFireParticle : MonoBehaviour
     {
         if (Input.GetKeyDown(toggleKey))
         {
-            if(isPlaying)
+            if(fireParticle.isPlaying)
             {
                 fireParticle.Stop();
                 pointLight.SetActive(false);
                 if (extinguishParticle != null)
                     extinguishParticle.Play();
-                isPlaying = false;
-            } 
-            else
+            } else
             {
                 fireParticle.Play();
                 pointLight.SetActive(true);
                 if (igniteParticle != null)
                     igniteParticle.Play();
-                isPlaying = true;
             }
         }
     }
