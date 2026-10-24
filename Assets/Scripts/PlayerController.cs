@@ -147,6 +147,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //void WinGame()
+    //{
+    //    isGameOver = true;
+    //    if (winLoseText != null)
+    //    {
+    //        winLoseText.text = "You Win!";
+    //    }
+
+
+    //    if (dustTrail != null && dustTrail.isPlaying)
+    //    {
+    //        dustTrail.Stop();
+    //    }
+
+
+    //    if (rb != null)
+    //    {
+    //        rb.linearVelocity = Vector3.zero;
+    //        rb.angularVelocity = Vector3.zero;
+    //    }
+
+
+    //    GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+    //    if (enemy != null)
+    //    {
+    //        UnityEngine.AI.NavMeshAgent agent = enemy.GetComponent<UnityEngine.AI.NavMeshAgent>();
+    //        if (agent != null)
+    //        {
+    //            agent.isStopped = true;
+    //            agent.velocity = Vector3.zero;
+    //        }
+    //    }
+
+
+    //    if (audioSource != null && winClip != null)
+    //    {
+    //        audioSource.PlayOneShot(winClip);
+    //    }
+
+
+    //    if (winCelebrationPrefab != null)
+    //    {
+    //        Instantiate(winCelebrationPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+    //    }
+    //}
     void WinGame()
     {
         isGameOver = true;
@@ -155,44 +200,43 @@ public class PlayerController : MonoBehaviour
             winLoseText.text = "You Win!";
         }
 
-       
         if (dustTrail != null && dustTrail.isPlaying)
         {
             dustTrail.Stop();
         }
 
-        
         if (rb != null)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
 
-  
+        // 停止敌人追击：同时按 Tag 和按名称查找，确保万无一失
         GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (enemy == null)
+        {
+            enemy = GameObject.Find("AI");
+        }
+
         if (enemy != null)
         {
-            UnityEngine.AI.NavMeshAgent agent = enemy.GetComponent<UnityEngine.AI.NavMeshAgent>();
-            if (agent != null)
+            EnemyAI enemyAI = enemy.GetComponent<EnemyAI>();
+            if (enemyAI != null)
             {
-                agent.isStopped = true;
-                agent.velocity = Vector3.zero;
+                enemyAI.StopEnemy(); // 调用彻底锁死停止方法
             }
         }
 
-      
         if (audioSource != null && winClip != null)
         {
             audioSource.PlayOneShot(winClip);
         }
 
-      
         if (winCelebrationPrefab != null)
         {
             Instantiate(winCelebrationPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
         }
     }
-
     void LoseGame()
     {
         isGameOver = true;
