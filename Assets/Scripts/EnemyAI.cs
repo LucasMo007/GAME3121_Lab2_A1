@@ -77,11 +77,14 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform playerTransform;
     private NavMeshAgent agent;
+    private Animator animator;     // 敌人角色模型上的 Animator（Week 9 动画）
     private bool isChasing = true; // 控制是否允许追击
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        // 角色模型是 AI 的子物体，所以从子物体里找 Animator
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -94,6 +97,12 @@ public class EnemyAI : MonoBehaviour
                 agent.isStopped = false;
             }
             agent.SetDestination(playerTransform.position);
+        }
+
+        // 把移动速度传给 Animator：Speed > 0.1 播放 Run，否则播放 Idle
+        if (animator != null && agent != null)
+        {
+            animator.SetFloat("Speed", agent.velocity.magnitude);
         }
     }
 
@@ -114,6 +123,11 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
             agent.ResetPath(); // 清空当前路径
+        }
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f); // 停下后回到 Idle
         }
     }
 
